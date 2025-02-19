@@ -8,3 +8,24 @@ html, body {
 	height: 100%;
 	overflow: hidden;
 }
+
+#chart1-container {
+	height: 500px;
+	margin: 20px;
+}
+
+header {
+	background-color: #050D19;
+}
+
+.center {
+	max-width: 1560px;
+	width: 94%;
+	margin: 0 auto;
+	padding: 17px 0;
+}
+
+.logo {
+	width: 237px;
+	height: 46px
+}

@@ -2,6 +2,7 @@ from flask import Flask, send_from_directory
 from flask_socketio import SocketIO
 from threading import Thread
 import os
+import random
 
 app = Flask(__name__, static_url_path="/")
 socketio = SocketIO(app)
@@ -13,10 +14,9 @@ def index():
 
 def send_telemetry():
     while True:
+        # Emits a random number for testing
+        socketio.emit("updateData", { "data": random.randint(0, 9) })
         socketio.sleep(2)
-        socketio.emit("updateData", { "data": 10 })
-        socketio.sleep(2)
-        socketio.emit("updateData", { "data": 7 })
 
 thread = Thread(target=send_telemetry)
 thread.start()

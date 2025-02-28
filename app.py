@@ -17,7 +17,7 @@ def send_telemetry():
     while True:
         # Currently emits random numbers for testing
         # To do: Get real data from amateur.sondehub.org or tinygs.com
-        socketio.emit("updateData", { "data": random.randint(0, 9) })
+        socketio.emit("updateData", { "data": random.randint(0, 6) })
         socketio.sleep(2)
 
 thread = Thread(target=send_telemetry)

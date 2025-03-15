@@ -1,25 +1,43 @@
-const chart1 = new Chart(document.getElementById("chart1"), {
-    type: "line",
-    data: {
-        labels: [0, 1, 2, 3, 4, 5],
-        datasets: [{
-            label: "Test Data",
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
+class DataChart {
+    #chart;
+    constructor(title) {
+        const canvasContainer = document.createElement("div");
+        canvasContainer.style.width = "500px";
+        canvasContainer.style.height = "300px";
+        const canvas = document.createElement("canvas");
+        this.#chart = new Chart(canvas, {
+            type: "line",
+            data: {
+                labels: [],
+                datasets: [{
+                    label: title,
+                    data: [],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
-        }
+        });
+        canvasContainer.appendChild(canvas);
+        document.querySelector("#chart-container").appendChild(canvasContainer);
     }
-});
+    addData(data) {
+        this.#chart.data.labels.push(this.#chart.data.labels.length);
+        this.#chart.data.datasets[0].data.push(data);
+        this.#chart.update();
+    }
+}
+
+const altitude = new DataChart("Altitude");
+const temperature = new DataChart("Temperature");
 
 const socket = io();
-socket.on("updateData", ({ data }) => {
-    chart1.data.labels.push(chart1.data.labels.length);
-    chart1.data.datasets[0].data.push(data);
-    chart1.update();
+socket.on("updateData", (data) => {
+    altitude.addData(data.altitude);
+    temperature.addData(data.temperature);
 });
